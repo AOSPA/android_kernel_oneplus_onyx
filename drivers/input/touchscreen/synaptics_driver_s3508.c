@@ -128,13 +128,13 @@ struct test_header {
 #define Mgesture            12  // M
 #define Wgesture            13  // W
 
-#define KEY_DOUBLE_TAP          KEY_WAKEUP // double tap
+#define KEY_DOUBLE_TAP          249 // double tap
 #define KEY_GESTURE_CIRCLE      250 // draw circle
 #define KEY_GESTURE_TWO_SWIPE   251 // swipe two finger vertically
-#define KEY_GESTURE_UP_ARROW    252 // draw up arrow
-#define KEY_GESTURE_DOWN_ARROW  253 // draw down arrow
-#define KEY_GESTURE_LEFT_ARROW  254 // draw left arrow
-#define KEY_GESTURE_RIGHT_ARROW 255 // draw right arrow
+#define KEY_GESTURE_DOWN_ARROW  252 // draw down arrow
+#define KEY_GESTURE_LEFT_ARROW  253 // draw left arrow
+#define KEY_GESTURE_RIGHT_ARROW 254 // draw right arrow
+#define KEY_GESTURE_UP_ARROW    255 // draw up arrow
 #define KEY_GESTURE_LETTER_W    256 // draw letter "W"
 #define KEY_GESTURE_LETTER_M    257 // draw letter "M"
 #define KEY_GESTURE_LTR_SWIPE   258 // swipe left to right
@@ -399,19 +399,19 @@ struct synaptics_ts_data {
 	struct mutex mutex;
 
 	/******gesture*******/
-	int double_tap_enable;
-	int double_swipe_enable;
-	int up_arrow_enable;
-	int down_arrow_enable;
-	int left_arrow_enable;
-	int right_arrow_enable;
-	int letter_o_enable;
-	int letter_w_enable;
-	int letter_m_enable;
-	int ltr_swipe_enable;
-	int rtl_swipe_enable;
-	int utd_swipe_enable;
-	int dtu_swipe_enable;
+	int double_tap_enable = 1;
+	int double_swipe_enable = 1;
+	int up_arrow_enable = 1;
+	int down_arrow_enable = 1;
+	int left_arrow_enable = 1;
+	int right_arrow_enable = 1;
+	int letter_o_enable = 1;
+	int letter_w_enable = 1;
+	int letter_m_enable = 1;
+	int ltr_swipe_enable = 1;
+	int rtl_swipe_enable = 1;
+	int utd_swipe_enable = 1;
+	int dtu_swipe_enable = 1;
 	struct wakeup_source syna_isr_ws;
 	spinlock_t isr_lock;
 	bool i2c_awake;
