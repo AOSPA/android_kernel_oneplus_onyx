@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a032c1c_b6f165df",
+        "filename": "arch/arm/configs/msm8974-perf_defconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000011
+      },
+      "writtenOn": "2017-06-02T18:10:18Z",
+      "side": 1,
+      "message": "We use lower case on the other kernels",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "3d4d96c86d27715fe81b210d044ce82160db0a1a",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad",
+      "unresolved": false
+    }
+  ]
+}
