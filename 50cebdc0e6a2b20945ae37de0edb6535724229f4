@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7fcf168_00997de4",
+        "filename": "drivers/input/misc/tri_state_key.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000011
+      },
+      "writtenOn": "2017-06-03T16:33:50Z",
+      "side": 0,
+      "message": "I wouldn\u0027t say this belongs here though",
+      "revId": "50cebdc0e6a2b20945ae37de0edb6535724229f4",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad",
+      "unresolved": false
+    }
+  ]
+}
