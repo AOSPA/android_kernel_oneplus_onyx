@@ -39,6 +39,7 @@ struct msm_thermal_data {
 	int32_t therm_reset_temp_degC;
 };
 
+#if 0
 #ifdef CONFIG_THERMAL_MONITOR
 extern int msm_thermal_init(struct msm_thermal_data *pdata);
 extern int msm_thermal_device_init(void);
@@ -58,6 +59,7 @@ static inline int msm_thermal_set_frequency(uint32_t cpu, uint32_t freq,
 {
 	return -ENOSYS;
 }
+#endif
 #endif
 
 #endif /*__MSM_THERMAL_H*/
