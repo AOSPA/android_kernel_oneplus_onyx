@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "15c33767_c722dc0d",
+        "filename": "drivers/misc/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2017-06-10T21:02:35Z",
+      "side": 1,
+      "message": "make this a defconfig option",
+      "revId": "cd7ba4d7c81ee60d9f693845a8bdb65ba29fadd8",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d685f778_cc14fc4b",
         "filename": "sound/soc/codecs/wcd9320.c",
         "patchSetId": 1
