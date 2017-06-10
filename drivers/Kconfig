@@ -154,6 +154,8 @@ source "drivers/bif/Kconfig"
 
 source "drivers/sensors/Kconfig"
 
+source "drivers/cpuquiet/Kconfig"
+
 #ifdef VENDOR_EDIT
 # hefaxi@filesystem,2015/05/05,support param partion read/write
 source "drivers/param_read_write/Kconfig"

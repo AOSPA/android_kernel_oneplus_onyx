@@ -146,6 +146,8 @@ obj-$(CONFIG_CORESIGHT)		+= coresight/
 obj-$(CONFIG_BIF)		+= bif/
 obj-$(CONFIG_SENSORS)		+= sensors/
 
+obj-$(CONFIG_CPUQUIET_FRAMEWORK)		+= cpuquiet/
+
 #ifdef VENDOR_EDIT
 # hefaxi@filesystem,2015/05/05,support param partion read/write
 obj-y 	+= param_read_write/
