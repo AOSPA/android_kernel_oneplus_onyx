@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8df65274_ae39a959",
+        "filename": "arch/arm/mach-msm/autosmp.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000011
+      },
+      "writtenOn": "2017-06-15T16:23:55Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 1
+      },
+      "revId": "01543cd72f64d7785cfa900a687d63817d0e72ff",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad",
+      "unresolved": false
+    }
+  ]
+}
