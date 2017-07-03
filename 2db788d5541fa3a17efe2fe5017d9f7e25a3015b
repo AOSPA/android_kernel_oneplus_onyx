@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eec3548c_fc87a13c",
+        "filename": "drivers/cpufreq/cpufreq_interactive.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000011
+      },
+      "writtenOn": "2017-07-03T18:04:47Z",
+      "side": 1,
+      "message": "What\u0027s that",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 29
+      },
+      "revId": "2db788d5541fa3a17efe2fe5017d9f7e25a3015b",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad",
+      "unresolved": false
+    }
+  ]
+}
