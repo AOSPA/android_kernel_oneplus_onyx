@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08a80646_e3eecad8",
+        "filename": "arch/arm/mach-msm/autosmp.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000011
+      },
+      "writtenOn": "2017-07-06T19:47:10Z",
+      "side": 1,
+      "message": "Call this DEFAULT_MAX_CORES_SCREENOFF",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "f8fcb4bb77d0f4a34197e589b5276e36300b3aaf",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad",
+      "unresolved": false
+    }
+  ]
+}
