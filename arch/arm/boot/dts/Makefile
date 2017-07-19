@@ -24,7 +24,7 @@ targets += $(addprefix ../, $(DTB_LIST))
 endif
 
 # Rule to build device tree blobs
-$(obj)/%.dtb: $(src)/dts/project/15055_HW/%.dts FORCE
+$(obj)/%.dtb: $(src)/dts/%.dts FORCE
 	$(call if_changed_dep,dtc)
 
 $(obj)/dtbs: $(DTB_OBJS)

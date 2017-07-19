@@ -21,6 +21,11 @@
 			qcom,ion-heap-type = "SYSTEM";
 		};
 
+		qcom,ion-heap@21 {
+			reg = <21>;
+			qcom,ion-heap-type = "SYSTEM_CONTIG";
+		};
+
 		qcom,ion-heap@8 { /* CP_MM HEAP */
 			compatible = "qcom,msm-ion-reserve";
 			reg = <8>;
@@ -58,7 +63,10 @@
 			compatible = "qcom,msm-ion-reserve";
 			reg = <23>;
 			qcom,heap-align = <0x1000>;
-			qcom,memory-fixed = <0x05d00000 0x1e00000>;
+                        /*wangdongdong@MultiMediaService,2016/01/14,enlarge ion heap 
+                         *qcom,memory-fixed = <0x05d00000 0x1e00000>;
+                         */
+			qcom,memory-fixed = <0x05d00000 0x1f00000>;
 			qcom,ion-heap-type = "CARVEOUT";
 		};
 	};
