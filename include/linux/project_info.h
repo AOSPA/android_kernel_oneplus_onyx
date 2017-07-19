@@ -26,5 +26,4 @@ enum COMPONENT_TYPE{
 int push_component_info(enum COMPONENT_TYPE type, char *version, char * manufacture);
 int reset_component_info(enum COMPONENT_TYPE type);
 bool is_15055_project(void);
-bool is_14001_project(void);
 #endif
