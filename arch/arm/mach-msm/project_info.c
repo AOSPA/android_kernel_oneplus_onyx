@@ -303,23 +303,16 @@ void get_ddr_manufacture_name(void){
 	}
 }
 
-#define PROJECT_14001_NAME "14001"
 #define PROJECT_15055_NAME "15055"
 
 #define PROJCET_NAME_LEN 17
 
-static bool is_14001_projcet;
 static bool is_15055_projcet;
 static char project_name[PROJCET_NAME_LEN];
 
 const char *get_prj_name(void)
 {
     return project_name;
-}
-
-bool is_14001_project(void)
-{
-    return is_14001_projcet;
 }
 
 bool is_15055_project(void)
@@ -337,13 +330,6 @@ static int __init parse_project_name(char *str)
 
     if(!strncmp(project_name, PROJECT_15055_NAME, sizeof(PROJECT_15055_NAME))){
         is_15055_projcet = true;
-        is_14001_projcet = false;
-    }else if(!strncmp(project_name, PROJECT_14001_NAME, sizeof(PROJECT_14001_NAME))){
-        is_14001_projcet = true;
-        is_15055_projcet = false;
-    }else{ // default it is 14001 project.
-        is_14001_projcet = true;
-        is_15055_projcet = false;
     }
 
     return 0;

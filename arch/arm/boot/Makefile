@@ -15,7 +15,6 @@ ifneq ($(MACHINE),)
 include $(srctree)/$(MACHINE)/Makefile.boot
 endif
 
-include $(srctree)/arch/arm/boot/dts/project/14001_HW/Makefile
 include $(srctree)/arch/arm/boot/dts/project/15055_HW/Makefile
 
 # Note: the following conditions must always be true:
@@ -77,22 +76,7 @@ targets += $(DTB_LIST)
 
 # Rule to build device tree blobs
 #VENDOR_EDIT ,shankai@bsp , 2016-5-11,add for dtsi support
-$(obj)/%.dtb: $(src)/dts/project/15055_HW_11/%.dts   FORCE
-	$(call if_changed_dep,dtc)
-
-$(obj)/%.dtb: $(src)/dts/project/15055_HW_12/%.dts   FORCE
-	$(call if_changed_dep,dtc)
-	
-$(obj)/%.dtb: $(src)/dts/project/15055_HW_13/%.dts   FORCE
-	$(call if_changed_dep,dtc)
-
-$(obj)/%.dtb: $(src)/dts/project/15055_HW_14/%.dts   FORCE
-	$(call if_changed_dep,dtc)
-	
-$(obj)/%.dtb: $(src)/dts/project/15055_HW_15/%.dts   FORCE
-	$(call if_changed_dep,dtc)
-
-$(obj)/%.dtb: $(src)/dts/project/14001_HW/%.dts   FORCE
+$(obj)/%.dtb: $(src)/dts/project/15055_HW/%.dts   FORCE
 	$(call if_changed_dep,dtc)
 #endif //VENDOR_EDIT
 $(obj)/dtbs: $(DTB_OBJS)
