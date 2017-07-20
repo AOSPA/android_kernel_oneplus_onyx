@@ -28,6 +28,12 @@
 		reg = <0xfe8050c8 0xc8>;
 		qcom,android-usb-swfi-latency = <1>;
 		qcom,android-usb-uicc-nluns = /bits/ 8 <1>;
+                /*add by jiachenghui for cdrom,20150619*/
+                /*#ifdef VENDOR_EDIT*/
+                qcom,android-usb-cdrom;
+                qcom,android-usb-internal-ums;
+                /*#ifdef VENDOR_EDIT*/
+                /*end add by jiachenghui for cdrom,20150619*/
 	};
 
 	qcom,msm-imem@fe805000 {
@@ -1548,9 +1554,10 @@
 			< 2419200000  965000  786 >,
 			< 2457600000  970000  802 >;
 	};
-
-	i2c@f9928000 { /* BLSP-1 QUP-6 */
-		cell-index = <3>;
+	/*#ifdef VENDOR_EDITOR*/
+/*ruanbanmao@oneplus.cn modify for the clk Tlow of NFC_I2C testing fail, begin. 2015-01-19*/
+	/*i2c@f9928000 { /* BLSP-1 QUP-6 */
+	/*	cell-index = <3>;
 		compatible = "qcom,i2c-qup";
 		reg = <0xf9928000 0x1000>;
 		#address-cells = <1>;
@@ -1564,6 +1571,9 @@
 		qcom,scl-gpio = <&msmgpio 30 0>;
 		qcom,master-id = <86>;
 	};
+	*/
+	/*ruanbanmao@oneplus.cn modify for the clk Tlow of NFC_I2C testing fail, begin. 2015-01-19*/
+	/*#endif*/
 };
 
 /* GPU overrides */
@@ -1572,7 +1582,7 @@
 	qcom,chipid = <0x03030002>;
 	qcom,msm-bus,num-cases = <15>;
 	qcom,bus-control;
-	qcom,initial-pwrlevel = <3>;
+	qcom,initial-pwrlevel = <4>;
 
 	/* Updated bus bandwidth requirements */
 	qcom,msm-bus,vectors-KBps =
@@ -1672,12 +1682,14 @@
 	vdd-cx-supply = <&pm8841_s2_corner>;
 };
 
-&mdss_hdmi_tx {
+//#ifndef VENDOR_EDIT
+/*&mdss_hdmi_tx {
 	reg =	<0xfd922100 0x370>,
 		<0xfd922500 0x7C>,
 		<0xfc4b8000 0x60F0>;
 	reg-names = "core_physical", "phy_physical", "qfprom_physical";
-};
+};*/
+//#endif
 
 &msm_vidc {
 	qcom,vidc-ns-map = <0x40000000 0x40000000>;
