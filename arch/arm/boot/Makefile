@@ -15,7 +15,7 @@ ifneq ($(MACHINE),)
 include $(srctree)/$(MACHINE)/Makefile.boot
 endif
 
-include $(srctree)/arch/arm/boot/dts/project/15055_HW/Makefile
+include $(srctree)/arch/arm/boot/dts/Makefile
 
 # Note: the following conditions must always be true:
 #   ZRELADDR == virt_to_phys(PAGE_OFFSET + TEXT_OFFSET)
@@ -76,7 +76,7 @@ targets += $(DTB_LIST)
 
 # Rule to build device tree blobs
 #VENDOR_EDIT ,shankai@bsp , 2016-5-11,add for dtsi support
-$(obj)/%.dtb: $(src)/dts/project/15055_HW/%.dts   FORCE
+$(obj)/%.dtb: $(src)/dts/%.dts   FORCE
 	$(call if_changed_dep,dtc)
 #endif //VENDOR_EDIT
 $(obj)/dtbs: $(DTB_OBJS)
