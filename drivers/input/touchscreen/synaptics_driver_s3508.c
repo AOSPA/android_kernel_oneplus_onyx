@@ -50,7 +50,7 @@
 
 #include <linux/input/mt.h>
 #include "synaptics_redremote.h"
-
+#include "synaptics_driver_s3508.h"
 
 /*------------------------------------------------Global Define--------------------------------------------*/
 #define PAGESIZE 512
@@ -1159,6 +1159,41 @@ static int synaptics_read_product_id(struct synaptics_ts_data *ts)
 		return -1;
 	}
 	return 0;
+}
+
+static void touch_enable(struct synaptics_ts_data *ts)
+{
+	if(0 == atomic_read(&ts->irq_enable))
+	{
+		if(ts->irq)
+			enable_irq(ts->irq);
+		atomic_set(&ts->irq_enable,1);
+	}
+}
+
+static void touch_disable(struct synaptics_ts_data *ts)
+{
+	if(1 == atomic_read(&ts->irq_enable))
+	{
+		if(ts->irq)
+			disable_irq_nosync(ts->irq);
+		atomic_set(&ts->irq_enable,0);
+	}
+}
+
+void synaptics_s3508_enable_global(bool enabled)
+{
+	if (ts_g == NULL)
+		return;
+
+	spin_lock(&ts_g->lock);
+
+	if (enabled)
+		touch_enable(ts_g);
+	else
+		touch_disable(ts_g);
+
+	spin_unlock(&ts_g->lock);
 }
 
 static int synaptics_init_panel(struct synaptics_ts_data *ts)
