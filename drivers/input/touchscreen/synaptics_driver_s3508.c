@@ -113,7 +113,7 @@ struct test_header {
 #define DTAP_DETECT_S3203     0x01
 
 
-#define UnkownGestrue       0
+#define UnknownGesture       0
 #define DouTap              1   // double tap
 #define UpVee               2   // V
 #define DownVee             3   // ^
@@ -125,40 +125,22 @@ struct test_header {
 #define Right2LeftSwip      9   // <--
 #define Up2DownSwip         10  // |v
 #define Down2UpSwip         11  // |^
-#define Mgestrue            12  // M
-#define Wgestrue            13  // W
+#define Mgesture            12  // M
+#define Wgesture            13  // W
 
-#define KEY_DOUBLE_TAP          KEY_WAKEUP // double tap to wake
-#define KEY_GESTURE_CIRCLE      250 // draw circle to lunch camera
-#define KEY_GESTURE_TWO_SWIPE	251 // swipe two finger vertically to play/pause
-#define KEY_GESTURE_V           252 // draw v to toggle flashlight
-#define KEY_GESTURE_LEFT_V      253 // draw left arrow for previous track
-#define KEY_GESTURE_RIGHT_V     254 // draw right arrow for next track
-
-#define BIT0 (0x1 << 0)
-#define BIT1 (0x1 << 1)
-#define BIT2 (0x1 << 2)
-#define BIT3 (0x1 << 3)
-#define BIT4 (0x1 << 4)
-#define BIT5 (0x1 << 5)
-#define BIT6 (0x1 << 6)
-#define BIT7 (0x1 << 7)
-
-int LeftVee_gesture = 0; //">"
-int RightVee_gesture = 0; //"<"
-int DouSwip_gesture = 0; // "||"
-int Circle_gesture = 0; // "O"
-int UpVee_gesture = 0; //"V"
-int DownVee_gesture = 0; //"^"
-int DouTap_gesture = 0; //"double tap"
-
-int Left2RightSwip_gesture=0;//"(-->)"
-int Right2LeftSwip_gesture=0;//"(<--)"
-int Up2DownSwip_gesture =0;//"up to down |"
-int Down2UpSwip_gesture =0;//"down to up |"
-
-int Wgestrue_gesture =0;//"(W)"
-int Mgestrue_gesture =0;//"(M)"
+#define KEY_DOUBLE_TAP          KEY_F1	// double tap to wake
+#define KEY_GESTURE_CIRCLE      KEY_F2	// draw circle to lunch camera
+#define KEY_GESTURE_TWO_SWIPE	KEY_F3	// swipe two finger vertically to play/pause
+#define KEY_GESTURE_V           KEY_F4	// draw v to toggle flashlight
+#define KEY_GESTURE_LEFT_V      KEY_F5	// draw left arrow for previous track
+#define KEY_GESTURE_RIGHT_V     KEY_F6	// draw right arrow for next track
+#define KEY_GESTURE_INVERT_V    KEY_F7
+#define KEY_GESTURE_SWIPE_LEFT  KEY_F8
+#define KEY_GESTURE_SWIPE_RIGHT KEY_F9
+#define KEY_GESTURE_M           KEY_F10
+#define KEY_GESTURE_W           KEY_F11
+#define KEY_GESTURE_SWIPE_UP    KEY_F12
+#define KEY_GESTURE_SWIPE_DOWN  KEY_F13
 #endif
 
 /*********************for Debug LOG switch*******************/
@@ -910,7 +892,7 @@ static int synaptics_enable_interrupt_for_gesture(struct synaptics_ts_data *ts, 
 			status_int = (ret & 0xF8) | 0x04;
 			/*enable gpio wake system through intterrupt*/
 			enable_irq_wake(ts->client->irq);
-			gesture = UnkownGestrue ;
+			gesture = UnknownGesture ;
 			/*clear interrupt bits for previous touch*/
 			ret = i2c_smbus_read_byte_data(ts->client, F01_RMI_DATA01);
 			if(ret < 0) {
@@ -979,7 +961,7 @@ static int synaptics_enable_interrupt_for_gesture(struct synaptics_ts_data *ts, 
 		status_int = (ret & 0xF8) | 0x04;
 		/*enable gpio wake system through intterrupt*/
 		enable_irq_wake(ts->client->irq);
-		gesture = UnkownGestrue ;
+		gesture = UnknownGesture ;
 		/*clear interrupt bits for previous touch*/
 		TPD_DEBUG("clear interrupt bits for previous touch\n");
 		ret = i2c_smbus_write_i2c_block_data( ts->client, F12_2D_CTRL20, 3, &(reportbuf[0x0]) );
@@ -1453,7 +1435,7 @@ static int get_swip_id(struct synaptics_ts_data *ts)
 static void gesture_judge(struct synaptics_ts_data *ts)
 {
 	//int ret = 0,gesture_sign, regswipe;
-	unsigned int keyCode = KEY_F4;
+	unsigned int keyCode = UnknownGesture;
 	int ret = 0, regswipe;
     uint8_t gesture_buffer[10];
 	static int F12_2D_DATA04;
@@ -1486,7 +1468,7 @@ static void gesture_judge(struct synaptics_ts_data *ts)
                         (regswipe == 0x44) ? Up2DownSwip      :
                         (regswipe == 0x48) ? Down2UpSwip      :
                         (regswipe == 0x80) ? DouSwip          :
-                        UnkownGestrue;
+                        UnknownGesture;
             break;
         case DTAP_DETECT:
 			gesture = DouTap;
@@ -1496,20 +1478,19 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 						(gesture_buffer[2] == 0x02) ? UpVee    :
 						(gesture_buffer[2] == 0x04) ? RightVee :
 						(gesture_buffer[2] == 0x08) ? LeftVee  :
-						UnkownGestrue;
+						UnknownGesture;
 
             break;
         case UNICODE_DETECT:
-			gesture =   (gesture_buffer[2] == 0x77 && gesture_buffer[3] == 0x00) ? Wgestrue :
-					    (gesture_buffer[2] == 0x6d && gesture_buffer[3] == 0x00) ? Mgestrue :
-                        UnkownGestrue;
+			gesture =   (gesture_buffer[2] == 0x77 && gesture_buffer[3] == 0x00) ? Wgesture :
+					    (gesture_buffer[2] == 0x6d && gesture_buffer[3] == 0x00) ? Mgesture :
+                        UnknownGesture;
 			break;
 		case 0:
-			gesture = UnkownGestrue;
+			gesture = UnknownGesture;
 
 	  	}
 
-	keyCode = UnkownGestrue;
 	// Get key code based on registered gesture.
 	switch (gesture) {
 		case DouTap:
@@ -1519,7 +1500,7 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 			keyCode = KEY_GESTURE_V;
 			break;
 		case DownVee:
-			keyCode = KEY_GESTURE_V;
+			keyCode = KEY_GESTURE_INVERT_V;
 			break;
 		case LeftVee:
 			keyCode = KEY_GESTURE_RIGHT_V;
@@ -1532,6 +1513,24 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 			break;
 		case DouSwip:
 			keyCode = KEY_GESTURE_TWO_SWIPE;
+			break;
+		case Left2RightSwip:
+			keyCode = KEY_GESTURE_SWIPE_RIGHT;
+			break;
+		case Right2LeftSwip:
+			keyCode = KEY_GESTURE_SWIPE_LEFT;
+			break;
+		case Mgesture:
+			keyCode = KEY_GESTURE_M;
+			break;
+		case Wgesture:
+			keyCode = KEY_GESTURE_W;
+			break;
+		case Up2DownSwip:
+			keyCode = KEY_GESTURE_SWIPE_DOWN;
+			break;
+		case Down2UpSwip:
+			keyCode = KEY_GESTURE_SWIPE_UP;
 			break;
 		default:
 			break;
@@ -1548,20 +1547,18 @@ static void gesture_judge(struct synaptics_ts_data *ts)
                                                         gesture == Right2LeftSwip ? "(<--)" :
                                                         gesture == Up2DownSwip ? "up to down |" :
                                                         gesture == Down2UpSwip ? "down to up |" :
-                                                        gesture == Mgestrue ? "(M)" :
-                                                        gesture == Wgestrue ? "(W)" : "unknown");
+                                                        gesture == Mgesture ? "(M)" :
+                                                        gesture == Wgesture ? "(W)" : "unknown");
 
 
 	synaptics_get_coordinate_point(ts);
-	if((gesture == DouTap && DouTap_gesture)||(gesture == RightVee && RightVee_gesture)\
-        ||(gesture == LeftVee && LeftVee_gesture)||(gesture == UpVee && UpVee_gesture)\
-        ||(gesture == Circle && Circle_gesture)||(gesture == DouSwip && DouSwip_gesture)){
+	if (ts->gesture_enable) {
         gesture_upload = gesture;
 		input_report_key(ts->input_dev, keyCode, 1);
 		input_sync(ts->input_dev);
 		input_report_key(ts->input_dev, keyCode, 0);
 		input_sync(ts->input_dev);
-    }else{
+    } else {
 		//if(is_project(OPPO_14005) || is_project(OPPO_15011)){
 			ret = i2c_smbus_read_i2c_block_data( ts->client, F12_2D_CTRL20, 3, &(reportbuf[0x0]) );
 			ret = reportbuf[2] & 0x20;
@@ -2102,59 +2099,9 @@ static int tp_double_read_func(struct file *file, char __user *user_buf, size_t 
 static int tp_double_write_func(struct file *file, const char __user *buffer, size_t count, loff_t *ppos)
 {
 	int ret = 0;
-	char buf[10];
-	if( count > 2)
-		return count;
-	if( copy_from_user(buf, buffer, count) ){
-		printk(KERN_INFO "%s: read proc input error.\n", __func__);
-		return count;
-	}
 
-       TPD_ERR("%s val:%x \n", __func__, buf[0]);
-	UpVee_gesture = (buf[0] & BIT0)?1:0; //"V"
-	DouSwip_gesture = (buf[0] & BIT1)?1:0;//"||"
-	LeftVee_gesture = (buf[0] & BIT3)?1:0; //">"
-	RightVee_gesture = (buf[0] & BIT4)?1:0;//"<"
-	Circle_gesture = (buf[0] & BIT6)?1:0; //"O"
-	DouTap_gesture = (buf[0] & BIT7)?1:0; //double tap
-	if(DouTap_gesture||Circle_gesture||UpVee_gesture||LeftVee_gesture\
-        ||RightVee_gesture||DouSwip_gesture)
-	{
-		atomic_set(&double_enable, 1);
-	}
-	else
-	{
-		atomic_set(&double_enable, 0);
-	}
-		if(gesture_enable == 1)
-	{
-		switch(atomic_read(&double_enable)){
-			case 0:
-				TPD_ERR("tp_guesture_func will be disable\n");
-				ret = synaptics_enable_interrupt_for_gesture(ts_g, 0);
-				if( ret<0 )
-					ret = synaptics_enable_interrupt_for_gesture(ts_g, 0);
-				ret = i2c_smbus_write_byte_data(ts_g->client, F01_RMI_CTRL00, 0x01);
-				if( ret < 0 ){
-					TPD_ERR("write F01_RMI_CTRL00 failed\n");
-					return -1;
-				}
-				break;
-			case 1:
-				TPD_ERR("tp_guesture_func will be enable\n");
-				ret = i2c_smbus_write_byte_data(ts_g->client, F01_RMI_CTRL00, 0x80);
-				if( ret < 0 ){
-					TPD_ERR("write F01_RMI_CTRL00 failed\n");
-					return -1;
-				}
-				ret = synaptics_enable_interrupt_for_gesture(ts_g, 1);
-				if( ret<0 )
-					ret = synaptics_enable_interrupt_for_gesture(ts_g, 1);
-				break;
-			default:
-				TPD_ERR("Please enter 0 or 1 to open or close the double-tap function\n");
-		}
-	}
+	sscanf(buffer, "%d", &ret);
+	ts->gesture_enable = ret > 0 ? 1 : 0;
 	return count;
 }
 
@@ -3489,7 +3436,7 @@ static int	synaptics_input_init(struct synaptics_ts_data *ts)
 		TPD_ERR("synaptics_ts_probe: Failed to allocate input device\n");
 		return -1;
 	}
-	ts->input_dev->name = TPD_DEVICE;;
+	ts->input_dev->name = TPD_NAME;;
 	set_bit(EV_SYN, ts->input_dev->evbit);
 	set_bit(EV_ABS, ts->input_dev->evbit);
 	set_bit(EV_KEY, ts->input_dev->evbit);
@@ -3500,13 +3447,19 @@ static int	synaptics_input_init(struct synaptics_ts_data *ts)
 	set_bit(INPUT_PROP_DIRECT, ts->input_dev->propbit);
 
 #ifdef SUPPORT_GESTURE
-	set_bit(KEY_F4 , ts->input_dev->keybit);//doulbe-tap resume
 	set_bit(KEY_DOUBLE_TAP, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_CIRCLE, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_V, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_LEFT_V, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_RIGHT_V, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_TWO_SWIPE, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_INVERT_V, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_SWIPE_LEFT, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_SWIPE_RIGHT, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_M, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_W, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_SWIPE_UP, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_SWIPE_DOWN, ts->input_dev->keybit);
 		set_bit(KEY_MENU , ts->input_dev->keybit);
 		set_bit(KEY_HOMEPAGE , ts->input_dev->keybit);
 		set_bit(KEY_BACK , ts->input_dev->keybit);
