@@ -128,28 +128,19 @@ struct test_header {
 #define Mgesture            12  // M
 #define Wgesture            13  // W
 
-#define KEY_DOUBLE_TAP          249 // double tap
-#define KEY_GESTURE_CIRCLE      250 // draw circle
-#define KEY_GESTURE_TWO_SWIPE   251 // swipe two finger vertically
-#define KEY_GESTURE_DOWN_ARROW  252 // draw down arrow
-#define KEY_GESTURE_LEFT_ARROW  253 // draw left arrow
-#define KEY_GESTURE_RIGHT_ARROW 254 // draw right arrow
-#define KEY_GESTURE_UP_ARROW    255 // draw up arrow
-#define KEY_GESTURE_LETTER_W    256 // draw letter "W"
-#define KEY_GESTURE_LETTER_M    257 // draw letter "M"
-#define KEY_GESTURE_LTR_SWIPE   258 // swipe left to right
-#define KEY_GESTURE_RTL_SWIPE   259 // swipe right to left
-#define KEY_GESTURE_UTD_SWIPE   260 // swipe up to down
-#define KEY_GESTURE_DTU_SWIPE   261 // swipe down to up
-
-#define BIT0 (0x1 << 0)
-#define BIT1 (0x1 << 1)
-#define BIT2 (0x1 << 2)
-#define BIT3 (0x1 << 3)
-#define BIT4 (0x1 << 4)
-#define BIT5 (0x1 << 5)
-#define BIT6 (0x1 << 6)
-#define BIT7 (0x1 << 7)
+#define KEY_DOUBLE_TAP          KEY_F1 // double tap
+#define KEY_GESTURE_CIRCLE      KEY_F2 // draw circle
+#define KEY_GESTURE_TWO_SWIPE   KEY_F3 // swipe two finger vertically
+#define KEY_GESTURE_DOWN_ARROW  KEY_F4 // draw down arrow
+#define KEY_GESTURE_LEFT_ARROW  KEY_F5 // draw left arrow
+#define KEY_GESTURE_RIGHT_ARROW KEY_F6 // draw right arrow
+#define KEY_GESTURE_UP_ARROW    KEY_F7 // draw up arrow
+#define KEY_GESTURE_RTL_SWIPE   KEY_F8 // swipe right to left
+#define KEY_GESTURE_LTR_SWIPE   KEY_F9 // swipe left to right
+#define KEY_GESTURE_LETTER_M    KEY_F10 // draw letter "M"
+#define KEY_GESTURE_LETTER_W    KEY_F11 // draw letter "W"
+#define KEY_GESTURE_DTU_SWIPE   KEY_F12 // swipe down to up
+#define KEY_GESTURE_UTD_SWIPE   KEY_F13 // swipe up to down
 #endif
 
 /*********************for Debug LOG switch*******************/
@@ -1487,7 +1478,7 @@ static int get_swip_id(struct synaptics_ts_data *ts)
 static void gesture_judge(struct synaptics_ts_data *ts)
 {
 	//int ret = 0,gesture_sign, regswipe;
-	unsigned int keyCode = KEY_F4;
+	unsigned int keyCode = UnknownGesture;
 	int ret = 0, regswipe;
     uint8_t gesture_buffer[10];
 	static int F12_2D_DATA04;
@@ -1543,7 +1534,6 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 
 	  	}
 
-	keyCode = UnknownGesture;
 	// Get key code based on registered gesture.
 	switch (gesture) {
 		case DouTap:
@@ -1603,19 +1593,20 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 			break;
 	}
 
-	printk("detect %s gesture\n", gesture == DouTap ? "double tap" :
-                                                        gesture == UpVee ? "up vee" :
-                                                        gesture == DownVee ? "down vee" :
-                                                        gesture == LeftVee ? "(>)" :
-                                                        gesture == RightVee ? "(<)" :
-                                                        gesture == Circle ? "circle" :
-														gesture == DouSwip ? "(||)" :
-                                                        gesture == Left2RightSwip ? "(-->)" :
-                                                        gesture == Right2LeftSwip ? "(<--)" :
-                                                        gesture == Up2DownSwip ? "up to down |" :
-                                                        gesture == Down2UpSwip ? "down to up |" :
-                                                        gesture == Mgesture ? "(M)" :
-                                                        gesture == Wgesture ? "(W)" : "unknown");
+	printk("detect %s gesture\n",
+           gesture == DouTap ? "double tap" :
+                gesture == UpVee ? "up vee" :
+                gesture == DownVee ? "down vee" :
+                gesture == LeftVee ? "(>)" :
+                gesture == RightVee ? "(<)" :
+                gesture == Circle ? "circle" :
+                gesture == DouSwip ? "(||)" :
+                gesture == Left2RightSwip ? "(-->)" :
+                gesture == Right2LeftSwip ? "(<--)" :
+                gesture == Up2DownSwip ? "up to down |" :
+                gesture == Down2UpSwip ? "down to up |" :
+                gesture == Mgesture ? "(M)" :
+                gesture == Wgesture ? "(W)" : "unknown");
 
 
 	synaptics_get_coordinate_point(ts);
@@ -3486,7 +3477,7 @@ static int	synaptics_input_init(struct synaptics_ts_data *ts)
 		TPD_ERR("synaptics_ts_probe: Failed to allocate input device\n");
 		return -1;
 	}
-	ts->input_dev->name = TPD_DEVICE;;
+	ts->input_dev->name = TPD_NAME;;
 	set_bit(EV_SYN, ts->input_dev->evbit);
 	set_bit(EV_ABS, ts->input_dev->evbit);
 	set_bit(EV_KEY, ts->input_dev->evbit);
@@ -3497,7 +3488,6 @@ static int	synaptics_input_init(struct synaptics_ts_data *ts)
 	set_bit(INPUT_PROP_DIRECT, ts->input_dev->propbit);
 
 #ifdef SUPPORT_GESTURE
-	set_bit(KEY_F4 , ts->input_dev->keybit);//doulbe-tap resume
 	set_bit(KEY_DOUBLE_TAP, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_CIRCLE, ts->input_dev->keybit);
 	set_bit(KEY_GESTURE_UP_ARROW, ts->input_dev->keybit);
